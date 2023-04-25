@@ -35,16 +35,26 @@ class ViewController: UIViewController {
             return
         }
         
-        if self.displayNumber.count < 9 { // maximum 9 significant figures can be entered
+        if self.displayNumber.count < 9 { // maximum 9 characters can be entered
             self.displayNumber += numberValue
             self.NumberOutputLabel.text = self.displayNumber
         }
     }
     
     @IBAction func tabClearButton(_ sender: UIButton) {
+        self.displayNumber = ""
+        self.firstOperand = ""
+        self.secondOperand = ""
+        self.result = ""
+        self.currentOperation = .unknown
+        self.NumberOutputLabel.text = "0"
     }
     
     @IBAction func tabDotButton(_ sender: UIButton) {
+        if self.displayNumber.count < 8, !self.displayNumber.contains(".") {    // # of characters limit = 9. Hence, if the a decimal point is added, the remaining characters can be entered = 8
+            self.displayNumber += self.displayNumber.isEmpty ? "0." : "."       // if current characters entered is empty(""), the characters is 0. . If it's not empty, simply add a decimal point
+            self.NumberOutputLabel.text = self.displayNumber
+        }
     }
     
     @IBAction func tabDivideButton(_ sender: UIButton) {
